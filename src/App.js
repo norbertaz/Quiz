@@ -6,7 +6,9 @@ function App() {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
+  const [showAnswers, setShowAnswers] = useState(false)
   const [gameEnded, setGameEnded] = useState(false);
+
   const [gameStarted,setGameStarted] = useState(false);
   const [categoryValue, setCategoryValue] = useState("")
   const [difficultyValue, setDifficultyValue] = useState("")
@@ -23,26 +25,47 @@ function App() {
     fetch(API_URL)
       .then(res => res.json())
       .then ((data) => {
-        setQuestions(data.results)
+        const questions = data.results.map((question) => ({
+          ...question,
+          answers: [
+            question.correct_answer,
+            ...question.incorrect_answers,
+          ].sort( () => Math.random() - 0.5),
+        }))
+        setQuestions(questions)
       })
   }, [API_URL])
 
 
   const handleAnswer = (answer) => {
-    setCurrentIndex(currentIndex + 1);
-    if(answer === questions[currentIndex].correct_answer){
-      setScore(score + 1)
+    // 
+    if(!showAnswers){
+      if(answer === questions[currentIndex].correct_answer){
+        setScore(score + 1)
+      }
     }
+
 
     if(currentIndex >= questions.length-1){
       setGameEnded(true)
     }
-    //Check the answer
-
-    //show next question
-
-    //change question number
-  }
+    setShowAnswers(true)
+    //My resolution 
+      //   if(answer === questions[currentIndex].correct_answer){
+      //     setScore(score + 1)}
+      // setShowAnswers(true)
+      // setTimeout(()=> {
+      //   setCurrentIndex(currentIndex + 1)
+      //   setShowAnswers(false)
+      // }, 2000)
+      // if(currentIndex >= questions.length-1){
+      //   setGameEnded(true)
+      // }
+    }
+    const handleNextQuestion = () => {
+      setShowAnswers(false)
+      setCurrentIndex(currentIndex + 1);
+    }
 
 
 
@@ -51,8 +74,8 @@ function App() {
       <h2 className={`${score >= 4 ? 'text-green-500' : 'text-yellow-500'}`}>Your score: {score}</h2>
       </div>
   ) : (questions.length > 0 ? (
-    <div className="container">
-      <Questionaire data={questions[currentIndex]} handleAnswer={handleAnswer} currentIndex={currentIndex}/>
+    <div className="container w-full">
+      <Questionaire data={questions[currentIndex]} showAnswers={showAnswers} handleAnswer={handleAnswer} currentIndex={currentIndex} handleNextQuestion={handleNextQuestion}/>
     </div>
   ) : (<h2 className='text-2xl text-white font-bold'>Hey... We're loading questions</h2>)));
 }
