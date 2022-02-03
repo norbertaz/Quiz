@@ -5,8 +5,8 @@ const StartingGame = ({handleStartGame, setCategoryvalue, setDifficultyvalue}) =
     <div className="start-game-container bg-blue-600 p-20 shadow-md rounded-lg text-center flex flex-wrap justify-around">
         <h1 className="mb-8 text-8xl w-full">Quiz Game</h1>
         <div className="category-wrapper flex flex-col items-center w-1/2">
-            <label htmlFor="category">Category:</label>
-            <select name="category" id="category" className="text-white text-center w-1/2 bg-blue-700 rounded outline-none appearance-none" onChange={(e) => setCategoryvalue(e.target.value)}>
+            <label htmlFor="category" className="text-xl font-semibold">Choose category:</label>
+            <select name="category" id="category" className="font-xl py-1 text-white text-center w-1/2 bg-blue-700 rounded outline-none appearance-none" onChange={(e) => setCategoryvalue(e.target.value)}>
                 <option categoryvalue="9" value="9">General knowledge</option>
                 <option categoryvalue="18" value="18">Science - Computers</option>
                 <option categoryvalue="17" value="17">Science & Nature</option>
@@ -18,8 +18,8 @@ const StartingGame = ({handleStartGame, setCategoryvalue, setDifficultyvalue}) =
             </select>
         </div>
         <div className="difficulty-wrapper flex flex-col items-center w-1/2">
-            <label htmlFor="difficulty">Difficulty:</label>
-            <select name="difficulty" id="difficulty" className="text-white text-center w-1/2 bg-blue-700 rounded outline-none appearance-none" onChange={(e) => setDifficultyvalue(e.target.value)} >
+            <label htmlFor="difficulty" className="text-xl font-semibold">Choose difficulty:</label>
+            <select name="difficulty" id="difficulty" className="font-xl py-1 text-white text-center w-1/2 bg-blue-700 rounded outline-none appearance-none" onChange={(e) => setDifficultyvalue(e.target.value)} >
                 <option difficultyvalue="easy" value="easy">Easy</option>
                 <option difficultyvalue="medium" value="medium">Medium</option>
                 <option difficultyvalue="hard" value="hard">Hard</option>
